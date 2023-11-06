@@ -42,6 +42,8 @@ Output yang diharapkan akan seperti berikut:
 
 ## Kriteria Penilaian
 
-- Nilai Testing peserta akan disortir secara DESC
-- Dokumentasi kode yang baik
-- Memberikan penjelasan mandiri mengenai Time Complexity dan Space Complexity yang diimplementasikan pada solusi yang diberikan
+- Nilai Testing peserta akan disortir secara DESC (tertinggi ke terendah)
+- Dokumentasi kode yang baik, seperti:
+  - TODO setiap baris kode solusi
+  - Ringkas, namun tepat
+  - Penjelasan mandiri mengenai Time Complexity dan Space Complexity yang diimplementasikan pada solusi yang diberikan

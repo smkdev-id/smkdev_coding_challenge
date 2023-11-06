@@ -34,5 +34,7 @@ Output yang diharapkan akan seperti berikut:
 
 ## Kriteria Penilaian
 
-- Nilai Testing peserta akan disortir secara DESC
-- Dokumentasi kode yang baik
+- Nilai Testing peserta akan disortir secara DESC (tertinggi ke terendah)
+- Dokumentasi kode yang baik, seperti:
+  - TODO setiap baris kode solusi
+  - Ringkas, namun tepat
