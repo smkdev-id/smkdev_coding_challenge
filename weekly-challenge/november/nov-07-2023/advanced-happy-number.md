@@ -1,6 +1,6 @@
 <div align=center>
     <h1>Happy Number</h1>
-    <p>Weekly Coding Challenge <b>advanced-oct-07-2023</b></p>
+    <p>Weekly Coding Challenge <b>advanced-nov-07-2023</b></p>
 </div>
 
 ## Permasalahan

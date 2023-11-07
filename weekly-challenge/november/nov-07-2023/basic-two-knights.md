@@ -1,6 +1,6 @@
 <div align=center>
     <h1>Two Knights</h1>
-    <p>Weekly Coding Challenge <b>basic-oct-07-2023</b></p>
+    <p>Weekly Coding Challenge <b>basic-nov-07-2023</b></p>
 </div>
 
 ## Permasalahan
