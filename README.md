@@ -11,7 +11,7 @@
 2. Score Collections
 3. Score Stage Dashboard
 4. Auth
-5. Automatic Problems Update
+5. README Reader for Automatic Problems Update
 6. Google Analytics Tracker
 7. Simple Stats for User
 8. Feedback
