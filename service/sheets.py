@@ -7,7 +7,7 @@ from typing import List
 from datetime import datetime, time, timedelta
 import pandas as pd
 
-from ..config.base import Google_API
+from ..config.static import Google_API
 
 # -----------------------------------------------------------------------------------
 

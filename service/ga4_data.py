@@ -13,7 +13,7 @@ from pandas import DataFrame
 import pandas as pd
 import os
 
-from ..config.base import Google_API
+from ..config.static import Google_API
 
 # ----------------------------------------------------------------------------------
 
