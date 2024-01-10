@@ -1,49 +1,30 @@
 import os
 from notion_client import Client
-from pprint import pprint
 import streamlit as st
-from dataclasses import dataclass
-from collections import namedtuple
+from dataclasses import dataclass, field
 from datetime import datetime
 from zoneinfo import ZoneInfo
 from typing import List
+from backend.static import STATUS_ICON
+
 
 # TTL = 24 * 60 * 60
 
 
 @dataclass
 class Challenges:
-    id: str
-    icon: str
-    name: str
-    status: str
-    category: str
-    type: str
-    stack: []
-    start_date: str
-    end_date: str
-    page_url: str
+    id: str = None
+    name: str = None
+    status: str = None
+    category: str = None
+    type: str = None
+    stack: List[str] = None
+    start_date: str = None
+    end_date: str = None
+    page_url: str = None
 
-
-STATUS_ICON = {
-    "Initiation": "💡",
-    "Waiting List": "➕",
-    "Drafting": "✍",
-    "Ready to Launch": "🚀",
-    "Published": "🌏",
-    "Archived": "📑"
-}
-
-
-CHALLENGE = namedtuple(
-    "Challenge",
-    ["id", "icon", "name", "status", "category", "type",
-        "stack", "start_date", "end_date", "page_url"]
-)
 
 # @st.cache_data(ttl=TTL, show_spinner="Fetching roadmap...")
-
-
 def _get_raw_data(
     auth=st.secrets.notion_client.NOTION_AUTH,
     database_id=st.secrets.notion_client.DB_ID
@@ -90,7 +71,7 @@ def get_tech_stack(stack_props) -> List:
     return [stack['name'] for stack in stack_props]
 
 
-def get_page_name(name_props) -> str:
+def complete_page_name(icon_props, name_props) -> str:
     """Retrieve page content name from request
 
     Parameters
@@ -178,22 +159,17 @@ def query_base_info(props) -> List:
         raw_data = result['properties']
 
         challenge_id = result['id']
-        challenge_icon = result['icon']['emoji']
-        challenge_name = get_page_name(raw_data['Name']['title'])
-        challenge_status = challenge_status_pair(
-            raw_data['Status']['status']['name'])
+        challenge_name = complete_page_name(icon_props=result['icon']['emoji'], name_props=raw_data['Name']['title'])
+        challenge_status = challenge_status_pair(raw_data['Status']['status']['name'])
         challenge_category = raw_data['Challenge Category']['select']['name']
         challenge_type = raw_data['Challenge Type']['select']['name']
-        challenge_stack = get_tech_stack(
-            raw_data['Tech Stack']['multi_select'])
-        challenge_start_date = format_date(
-            raw_data['Timeline']['date']['start'])
+        challenge_stack = get_tech_stack(raw_data['Tech Stack']['multi_select'])
+        challenge_start_date = format_date(raw_data['Timeline']['date']['start'])
         challenge_end_date = format_date(raw_data['Timeline']['date']['end'])
         challenge_page = result['public_url']
 
         challenges_data = Challenges(
             id=challenge_id,
-            icon=challenge_icon,
             name=challenge_name,
             status=challenge_status,
             category=challenge_category,
@@ -211,7 +187,4 @@ def query_base_info(props) -> List:
 def clean_data():
     props = _get_raw_data()["results"]
     base_info = query_base_info(props)
-    return base_info
-
-
-print(clean_data())
+    return props, base_info

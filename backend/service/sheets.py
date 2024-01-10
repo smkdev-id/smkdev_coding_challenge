@@ -2,12 +2,13 @@
 
 from oauth2client.service_account import ServiceAccountCredentials
 import gspread as Spreadsheet
+from streamlit_gsheets import GSheetsConnection
 from dataclasses import dataclass
 from typing import List
 from datetime import datetime, time, timedelta
 import pandas as pd
 
-from ..config.static import Google_API
+from ..static import Google_API
 
 # -----------------------------------------------------------------------------------
 
