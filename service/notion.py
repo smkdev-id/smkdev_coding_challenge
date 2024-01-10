@@ -3,10 +3,10 @@ from notion_client import Client
 from pprint import pprint
 import streamlit as st
 from dataclasses import dataclass
-# from config.static import STATUS_ICON
 from collections import namedtuple
 from datetime import datetime
 from zoneinfo import ZoneInfo
+from typing import List
 
 # TTL = 24 * 60 * 60
 
@@ -47,20 +47,20 @@ CHALLENGE = namedtuple(
 def _get_raw_data(
     auth=st.secrets.notion_client.NOTION_AUTH,
     database_id=st.secrets.notion_client.DB_ID
-):
-    """_summary_
+) -> List:
+    """Request gallery data on Notion
 
     Parameters
     ----------
-    auth : _type_, optional
-        _description_, by default st.secrets.notion_client.NOTION_AUTH
-    database_id : _type_, optional
-        _description_, by default st.secrets.notion_client.DB_ID
+    auth : optional
+        Notion Auth for integrations, by default st.secrets.notion_client.NOTION_AUTH
+    database_id : optional
+        Targetted Database in Notion, by default st.secrets.notion_client.DB_ID
 
     Returns
     -------
-    _type_
-        _description_
+    List
+        Return all data that checked for "Share to Web Page"
     """
 
     notion = Client(auth=auth)
@@ -74,50 +74,50 @@ def _get_raw_data(
     return db_query
 
 
-def get_tech_stack(stack_props):
-    """_summary_
+def get_tech_stack(stack_props) -> List:
+    """Append tech stack from Tech Stack data
 
     Parameters
     ----------
-    stack_props : _type_
-        _description_
+    stack_props : dict
+        The raw tech stack data based on request
 
     Returns
     -------
-    _type_
-        _description_
+    List
+        Return clean tech stack information
     """
     return [stack['name'] for stack in stack_props]
 
 
-def get_page_name(name_props):
-    """_summary_
+def get_page_name(name_props) -> str:
+    """Retrieve page content name from request
 
     Parameters
     ----------
-    name_props : _type_
-        _description_
+    name_props : dict
+        The raw page name based on request
 
     Returns
     -------
-    _type_
-        _description_
+    str
+        Return page name
     """
     return "".join(name["plain_text"] for name in name_props)
 
 
 def challenge_status_pair(status_props):
-    """_summary_
+    """Pairing challenges with great icons
 
     Parameters
     ----------
-    status_data : _type_
-        _description_
+    status_props : dict
+        The raw status date based on request
 
     Returns
     -------
-    _type_
-        _description_
+    str
+        Return paired of icon and statu name
     """
     icon = ""
     for key, value in STATUS_ICON.items():
@@ -127,17 +127,17 @@ def challenge_status_pair(status_props):
 
 
 def format_date(date_props):
-    """_summary_
+    """Formatting date like notion creation
 
     Parameters
     ----------
-    date_props : _type_
-        _description_
+    date_props : dict
+        The raw date data based on request
 
     Returns
     -------
-    _type_
-        _description_
+    str
+        Return formatted date
     """
     # parse the datetime string
     # remove the milliseconds and timezone offset
@@ -158,18 +158,18 @@ def format_date(date_props):
     return dt_fmt
 
 
-def query_base_info(props):
-    """_summary_
+def query_base_info(props) -> List:
+    """Construct the request date to Challenges class
 
     Parameters
     ----------
-    props : _type_
-        _description_
+    props : List
+        The Raw Request Data
 
     Returns
     -------
-    _type_
-        _description_
+    List
+        Return list of clean Challenges data
     """
 
     all_challenges = []
@@ -211,4 +211,7 @@ def query_base_info(props):
 def clean_data():
     props = _get_raw_data()["results"]
     base_info = query_base_info(props)
-    pprint(base_info)
+    return base_info
+
+
+print(clean_data())
