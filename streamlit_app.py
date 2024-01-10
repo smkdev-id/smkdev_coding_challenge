@@ -4,7 +4,7 @@ import os
 import streamlit as st
 import numpy as np
 
-from pages import feedback, past_challenges, the_challenges, welcome, your_stats
+from pages import active_challenges, feedback, past_challenges, welcome, your_stats
 from config import active_props, static
 
 
