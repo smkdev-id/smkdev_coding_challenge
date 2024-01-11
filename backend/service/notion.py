@@ -1,10 +1,10 @@
 import os
 from notion_client import Client
 import streamlit as st
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, asdict
 from datetime import datetime
 from zoneinfo import ZoneInfo
-from typing import List
+from typing import List, Dict, Optional
 from backend.static import STATUS_ICON
 
 
@@ -22,6 +22,10 @@ class Challenges:
     start_date: str = None
     end_date: str = None
     page_url: str = None
+    
+    def _to_dict(self) -> Dict:
+        return {k: v for k, v in asdict(self).items()}
+        
 
 
 # @st.cache_data(ttl=TTL, show_spinner="Fetching roadmap...")
@@ -154,7 +158,7 @@ def query_base_info(props) -> List:
     """
 
     all_challenges = []
-
+    
     for result in props:
         raw_data = result['properties']
 
@@ -178,7 +182,8 @@ def query_base_info(props) -> List:
             start_date=challenge_start_date,
             end_date=challenge_end_date,
             page_url=challenge_page
-        )
+        )._to_dict()
+        
         all_challenges.append(challenges_data)
 
     return all_challenges
